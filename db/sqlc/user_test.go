@@ -10,9 +10,12 @@ import (
 )
 
 func createRandomUser(t *testing.T) User {
+	hashedPassword, err := util.HashPassword(util.RandomString(6))
+	require.NoError(t, err)
+	//require.EqualError(t, err, bcrypt.ErrMismatchedHashAndPassword.Error())
 	arg := CreateUserParams{
 		Username:       util.RandonOwner(),
-		HashedPassword: "secret",
+		HashedPassword: hashedPassword,
 		FullName:       util.RandonOwner(),
 		Email:          util.RandomEmail(),
 	}
